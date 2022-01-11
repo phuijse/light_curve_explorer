@@ -1,0 +1,16 @@
+name: astro
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - scipy
+  - pandas
+  - jupyter
+  - matplotlib
+  - cython
+  - ipympl
+  - astropy
+  - holoviews
+  - pip:
+    - alerce
+prefix: /home/phuijse/.conda/envs/astro
