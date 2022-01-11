@@ -1,6 +1,5 @@
 name: astro
 channels:
-  - defaults
   - conda-forge
 dependencies:
   - scipy
@@ -11,6 +10,7 @@ dependencies:
   - ipympl
   - astropy
   - holoviews
+  - pip
   - pip:
     - alerce
 prefix: /home/phuijse/.conda/envs/astro
