@@ -18,9 +18,10 @@ hv.opts.defaults(
 )
 
 client = Alerce()
-cols = ["mjd", "fid", "magpsf", "sigmapsf"]
-oids = client.query_objects(class_name="RRL", page_size=27)["oid"]
-lcs = {oid: client.query_detections(oid, format="pandas")[cols] for oid in oids}
+oids = client.query_objects(
+    class_name="RRL", classifier="lc_classifier", probability=0.9, page_size=27
+)["oid"]
+lcs = {oid: client.query_detections(oid, format="pandas") for oid in oids}
 periods = {
     oid: client.query_feature(oid, "Multiband_period")[0]["value"] for oid in oids
 }
@@ -30,11 +31,15 @@ def plot_lc(oid):
     lc, period = lcs[oid], periods[oid]
     plot_bands = []
     for fid, c in zip([1, 2], ["green", "red"]):
-        data = lc.loc[lc["fid"] == fid].drop("fid", axis=1)
-        phase = np.mod(data["mjd"], period) / period
+        mjd, mag, err = (
+            lc.loc[lc["fid"] == fid][["mjd", "magpsf_corr", "sigmapsf"]]
+            .dropna()
+            .values.T
+        )
+        phase = np.mod(mjd, period) / period
         plot_bands.append(
             hv.ErrorBars(
-                (phase, data["magpsf"], data["sigmapsf"]),
+                (phase, mag, err),
                 label=oid,
                 kdims="Phase",
                 vdims=["Magnitude", "Delta mag"],
