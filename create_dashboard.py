@@ -36,4 +36,4 @@ class LightCurveExplorer(param.Parameterized):
 explorer = LightCurveExplorer()
 app = pn.Column(explorer.view, explorer.param)
 # If on jupyter you can run app to display the dashboard
-app.save("build/index.html", embed=True)
+app.save("_build/index.html", embed=True)

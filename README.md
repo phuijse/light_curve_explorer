@@ -2,4 +2,4 @@
 
 You can use the provided `environment.yml` to install the needed libreries using conda
 
-Executing `create_dashboard.py` should create a "ready to serve" `build/index.html` file 
+Executing `create_dashboard.py` should create a "ready to serve" `_build/index.html` file 
